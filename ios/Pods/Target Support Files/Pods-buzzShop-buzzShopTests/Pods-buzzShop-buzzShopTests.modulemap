@@ -1,0 +1,6 @@
+module Pods_buzzShop_buzzShopTests {
+  umbrella header "Pods-buzzShop-buzzShopTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
