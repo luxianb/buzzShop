@@ -7,16 +7,21 @@ interface Ipage {
   children?: any;
 }
 
-export const Page = (props: Ipage) => (
+export const Page = (props: Ipage) => {
+
+  return (
   <SafeAreaView style={[{flex: 1}]}>
-      <ScrollView 
+    <View style={[{flex: 1}, props.style]}>
+      {/* <ScrollView 
         contentInsetAdjustmentBehavior="automatic"
         style={props.style}
-      >
+        contentContainerStyle={{minHeight: window.height}}
+      > */}
         {props.children}
-      </ScrollView>
+      {/* </ScrollView> */}
+      </View>
     </SafeAreaView>
-)
+)}
 
 const viewBase = styled(View)`
   position: relative;

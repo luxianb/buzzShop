@@ -2,7 +2,7 @@ import React from 'react';
 import { Page, Col, Row } from 'components/Views';
 import { useSelector, useDispatch } from 'util/redux/hooks';
 import { P, H1 } from 'components/Texts';
-import {Button} from 'components/Buttons';
+import Button from 'components/Buttons';
 import {increment, decrement} from 'util/redux/slices/counterSlice'
 
 export default function Landing() {
@@ -14,8 +14,8 @@ export default function Landing() {
       <Col>
         <H1>{count}</H1>
         <Row>
-          <Button onPress={() => dispatch(increment())} label={'+'} />
-          <Button onPress={() => dispatch(decrement())} label={'-'} />
+          <Button.Primary onPress={() => dispatch(increment())} label={'+'} />
+          <Button.Primary onPress={() => dispatch(decrement())} label={'-'} />
         </Row>
         <P>Hello World</P>
       </Col>

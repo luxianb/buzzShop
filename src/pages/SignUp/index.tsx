@@ -1,8 +1,10 @@
 import { Input, PasswordInput } from 'components/Inputs';
 import { H2 } from 'components/Texts';
 import { Page } from 'components/Views';
+import Button from 'components/Buttons';
 import React, { useReducer } from 'react';
 import {gap} from 'util/sizes';
+import { ScrollView } from 'react-native';
 
 const initialState = {
   userName: '',
@@ -26,6 +28,7 @@ export default function SignUp() {
   return(
     <Page style={{padding: gap.M}}>
       <H2 style={{marginBottom: gap.L}}>Sign Up</H2>
+      {/* <ScrollView> */}
       <Input
         placeholder="User name"
         value={state.userName}
@@ -50,6 +53,12 @@ export default function SignUp() {
         value={state.rePassword}
         onChange={(rePassword: String) => setState({rePassword})}
       />
+      {/* </ScrollView> */}
+      <Button.Primary 
+        label="Sign Up"
+        style={{position: "absolute", bottom: 0, left: gap.M, right: gap.M}}
+      />
+      <H2>{API_URL}</H2>
     </Page>
   );
 }
