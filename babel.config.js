@@ -9,6 +9,6 @@ module.exports = {
           "pages": "./src/pages",
           "util": "./src/util",
         },
-    } ],
+    }],
   ],
 };
