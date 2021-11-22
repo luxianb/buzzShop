@@ -6,6 +6,7 @@ const initialState = {
     username: '',
     id: '',
     email: '',
+    is_superuser: false,
   }
 }
 

@@ -8,8 +8,7 @@ import NavBar from 'components/NavBar';
 import { ProductCard } from 'components/Cards';
 
 import {gap, BASE_URL} from 'util/index';
-import { useDispatch, useSelector } from 'util/redux/hooks';
-import { setToken } from 'util/redux/slices/tokenSlice';
+import { useSelector } from 'util/redux/hooks';
 
 export default function Landing(props: any) {
   const {navigation} = props;
@@ -31,10 +30,6 @@ export default function Landing(props: any) {
     fetchProducts();
   },[])
 
-  console.log(userInfo);
-  console.log(products);
-
-  const TESTING = false
 
   return(
     <>
@@ -54,24 +49,6 @@ export default function Landing(props: any) {
             />
           )}
         />
-        {TESTING && (
-          <>
-        <Button.Primary
-          label="Log In"
-          onPress={() => navigation.navigate("Login") }
-          style={{marginBottom: gap.M}}
-        />
-        <Button.Ghost
-          label="Sign Up"
-          onPress={() => navigation.navigate("SignUp") }
-        />
-        <Button.Primary
-          label="Add Product"
-          onPress={() => navigation.navigate("AddProduct") }
-          style={{marginBottom: gap.M}}
-        />
-        </>
-        )}
         
       </Col>
     </Page>

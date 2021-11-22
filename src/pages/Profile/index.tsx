@@ -48,6 +48,13 @@ export default function ProfilePage(props: any) {
               </Col>
             </Row>
             <Hr />
+            {Boolean(userInfo?.is_superuser) && (
+              <Button.Primary
+                label="Add Product"
+                onPress={() => navigation.navigate("AddProduct") }
+                style={{marginBottom: gap.M}}
+              />
+            )}
             <Button.Ghost label="Log Out" onPress={() => dispatch(removeLoginInfo())}/>
           </>
         ) : (
