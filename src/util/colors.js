@@ -321,6 +321,8 @@ const black = '#000000';
 const definedColors = {
   primary: red['A200'],
   secondary: red['A100'],
+  success: lightGreen['500'],
+  error: red['500']
 }
 
 const color = {red, pink, purple, deepPurple, indigo, blue, lightBlue, cyan, teal, green, lightGreen, lime, yellow, orange, deepOrange, brown, grey, blueGrey, white, black, ...definedColors}
