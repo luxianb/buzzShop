@@ -1,24 +1,81 @@
-import React from 'react';
-import { Page, Col, Row } from 'components/Views';
-import { useSelector, useDispatch } from 'util/redux/hooks';
-import { P, H1 } from 'components/Texts';
-import Button from 'components/Buttons';
-import {increment, decrement} from 'util/redux/slices/counterSlice'
+import React, { useEffect, useState } from 'react';
 
-export default function Landing() {
-  const count = useSelector(state => state.counter.value);
-  const dispatch = useDispatch();
+import axios from 'axios';
+import { FlatList, View } from 'react-native';
+
+import {Button, H1, P, Col, Row, Page } from 'components/index';
+import NavBar from 'components/NavBar';
+import { ProductCard } from 'components/Cards';
+
+import {gap, BASE_URL} from 'util/index';
+import { useDispatch, useSelector } from 'util/redux/hooks';
+import { setToken } from 'util/redux/slices/tokenSlice';
+
+export default function Landing(props: any) {
+  const {navigation} = props;
+
+  const {access: accessToken, userInfo} = useSelector(state => state.token);
+  const [products, setProducts] = useState({status: 'initial', data:[]})
+  // const dispatch = useDispatch();
+
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        const res = await axios.get(`${BASE_URL}/product/`)
+        console.log(res)
+        setProducts({status: 'fetched', data:res.data})
+
+      } catch (err) {console.log(err)}
+    }
+
+    fetchProducts();
+  },[])
+
+  console.log(userInfo);
+  console.log(products);
+
+  const TESTING = false
 
   return(
-    <Page>
+    <>
+    <Page style={{padding: gap.M}}>
       <Col>
-        <H1>{count}</H1>
-        <Row>
-          <Button.Primary onPress={() => dispatch(increment())} label={'+'} />
-          <Button.Primary onPress={() => dispatch(decrement())} label={'-'} />
-        </Row>
-        <P>Hello World</P>
+        <H1 style={{marginBottom: gap.XL}}>Welcome {accessToken ? `${userInfo.username}` : ''}</H1>
+        
+        <FlatList
+          data={products.data}
+          numColumns={2}
+          style={{marginRight: -gap.M}}
+          ItemSeparatorComponent={() => <View style={{height: gap.M}} />}
+          renderItem={({item}) => (
+            <ProductCard
+              product={item}
+              onPress={() => navigation.navigate("ProductDetail", {product: item})}
+            />
+          )}
+        />
+        {TESTING && (
+          <>
+        <Button.Primary
+          label="Log In"
+          onPress={() => navigation.navigate("Login") }
+          style={{marginBottom: gap.M}}
+        />
+        <Button.Ghost
+          label="Sign Up"
+          onPress={() => navigation.navigate("SignUp") }
+        />
+        <Button.Primary
+          label="Add Product"
+          onPress={() => navigation.navigate("AddProduct") }
+          style={{marginBottom: gap.M}}
+        />
+        </>
+        )}
+        
       </Col>
     </Page>
+    <NavBar />
+    </>
   )
 };
