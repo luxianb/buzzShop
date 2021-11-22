@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import {Text} from 'react-native';
 import {fontSize} from 'util/sizes';
+import color from 'util/colors';
 
 const textBase = styled(Text)`
   margin: 0;
@@ -31,3 +32,10 @@ export const H6 = styled(headerBase)`
 export const P = styled(textBase)`
   font-size: ${fontSize.M}px;
 `;
+
+export const A = styled(Text)`
+  color: ${color.primary};
+  text-decoration-line: underline;
+`;
+
+export {default as Prompt} from './Prompts';
