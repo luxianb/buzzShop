@@ -16,11 +16,11 @@ const ButtonContainer = styled(buttonBase)`
 `;
 
 const PrimaryButtonContainer = styled(buttonBase)`
-  background-color: ${(prop: any) => prop.color || color.primary}};
+  background-color: ${(prop: any) => prop.color || color.primary};
 `;
 
 const GhostButtonContainer = styled(buttonBase)`
-  background-color: ${(prop: any) => hexToRGB(prop.color || color.primary, 0.1)}};
+  background-color: ${(prop: any) => hexToRGB(prop.color || color.primary, 0.1)};
 `;
 
 const WireButtonContainer = styled(buttonBase)`
