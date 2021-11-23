@@ -1,12 +1,12 @@
 import React from 'react';
+import { Image, Pressable } from 'react-native';
 import styled from 'styled-components';
+
 import {H4, P} from 'components/Texts';
 import {Col} from 'components/Views';
-import { Image, Pressable, useWindowDimensions } from 'react-native';
-// import { useNavigation } from '@react-navigation/native';
+import { ProdCardImage } from 'components/ImageDisplay';
 import {gap} from "util/sizes";
 import color from 'util/colors';
-import { ProdCardImage } from 'components/ImageDisplay';
 
 const CardContainer = styled(Col)``;
 
@@ -14,7 +14,9 @@ const CardImage = styled(Image)`
   border-radius: ${gap.M}px;
 `;
 
-const ProductName = styled(P)``;
+const ProductName = styled(P)`
+  margin-top: ${gap.S}px;
+`;
 
 const PriceLabel = styled(H4)`
   color: ${color.primary};
@@ -27,7 +29,7 @@ export const ProductCard = (props: any) => {
   return (
   <Pressable onPress={() => props.onPress()} style={{marginRight: gap.M}} disabled={!props.onPress}>
     <CardContainer>
-        <ProdCardImage source={image_url} />
+      <ProdCardImage source={image_url} />
       <ProductName>{name}</ProductName>
       <PriceLabel>${price}</PriceLabel>
     </CardContainer>
