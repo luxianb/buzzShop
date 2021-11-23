@@ -11,6 +11,7 @@ import axios from 'axios';
 
 export default function ProductDetailPage(props: any) {
   const [displayModal, setDisplayModal] = useState('');
+  const [floatHeight, setFloatHeight] = useState(0);
   const {route: {params: {product}}, navigation} = props;
   const {access: accessToken, userInfo: {id: user_id}} = useSelector(state => state.token);
   const safeArea = {
@@ -60,12 +61,18 @@ export default function ProductDetailPage(props: any) {
             <H4 style={{ color: color.primary }}>${product.price}</H4>
             <P style={{ marginTop: gap.L }}>{product.description}</P>
           </Col>
+          <View style={{height: floatHeight + gap.L}} />
         </ScrollView>
-        <Button.Primary
-          style={[s.cartButton, { bottom: safeArea.bottom + gap.M }]}
-          label="Add to cart"
-          onPress={() => onAddCartPress()}
-        />
+
+        <View 
+          style={[s.cartButton, { paddingBottom: safeArea.bottom + gap.M }]}
+          onLayout={(e) => setFloatHeight(e.nativeEvent.layout.height)}
+        >
+          <Button.Primary
+            label="Add to cart"
+            onPress={() => onAddCartPress()}
+          />
+        </View>
       </View>
 
       {Boolean(displayModal) && ( <>
@@ -94,8 +101,10 @@ const s = StyleSheet.create({
   },
   cartButton: {
     position: 'absolute',
-    left: gap.M,
-    right: gap.M,
+    paddingHorizontal: gap.M,
+    left: 0,
+    right: 0,
+    bottom: 0,
     zIndex: 2
   }
 })
