@@ -1,0 +1,9 @@
+export {default as Landing } from 'pages/Landing';
+export {default as SignUp } from 'pages/SignUp';
+export {default as LoginPage } from 'pages/Login';
+export {default as ProfilePage } from 'pages/Profile';
+export {default as FindProducts } from 'pages/FindProducts';
+export {default as CartPage } from 'pages/Cart';
+export {default as PostProductPage } from 'pages/PostProduct';
+export {default as ProductDetailPage } from 'pages/ProductDetail';
+export {default as CheckOutPage } from 'pages/CheckOut';

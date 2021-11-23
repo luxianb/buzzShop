@@ -72,7 +72,7 @@ export default function CartPage(props: any) {
       {selectedItems.length > 0 && (
         <Row style={s.checkOutContainer}>
           <P>Total: <H4 style={{color: color.primary}}>${selectedItems.reduce((total, item) => (total + (item.product.price * item.amount)), 0)}</H4></P>
-          <Button.Primary padding={gap.S} label="Check Out" />
+          <Button.Primary padding={gap.S} label="Check Out" onPress={() => navigation.push('CheckOut', selectedItems)}/>
         </Row>
       )}
       <NavBar navigation={navigation}/>

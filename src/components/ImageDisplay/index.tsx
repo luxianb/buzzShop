@@ -70,6 +70,14 @@ export const SquaredImage = (props:any) => {
   )
 }
 
+const ImageDisplay = {
+  Square: SquaredImage,
+  Card: ProdCardImage,
+  Product: ProductImage,
+}
+
+export default ImageDisplay;
+
 const s = StyleSheet.create({
   imageContainer: {
     flex: 1,
