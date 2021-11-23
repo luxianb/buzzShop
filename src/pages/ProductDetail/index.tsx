@@ -5,22 +5,40 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ProductBackButton } from 'components/Buttons/BackButtons';
 
 import {H2, H4, P, A, Col, Button, Modal, Row} from 'components/index'
-import {gap, color} from 'util/index'
+import {gap, color, BASE_URL} from 'util/index'
 import {useSelector} from 'util/redux/hooks';
+import axios from 'axios';
 
 export default function ProductDetailPage(props: any) {
   const [displayModal, setDisplayModal] = useState('');
   const {route: {params: {product}}, navigation} = props;
-  const {access: accessToken} = useSelector(state => state.token);
+  const {access: accessToken, userInfo: {id: user_id}} = useSelector(state => state.token);
   const safeArea = {
     top: Math.max(useSafeAreaInsets().top, 16),
     bottom: Math.max(useSafeAreaInsets().bottom, 16),
   };
 
   function onAddCartPress() {
-    if (Boolean(accessToken)) {
+    if (!Boolean(accessToken)) {
       return setDisplayModal('requireLogin');
     }
+
+    AddToCart();
+  }
+
+  async function AddToCart() {
+    try {
+      const form = {user: user_id, product: product.id, amount: 1};
+      console.log(form)
+      const res = await axios.post(`${BASE_URL}/cart/add/`, form, {
+        headers: { Authorization: `Bearer ${accessToken}` }
+      });
+  
+      console.log(res.data)
+      navigation.navigate("Cart")
+
+    } catch (err) {console.log(err)}
+
   }
 
   console.log(product)
