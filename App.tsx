@@ -26,19 +26,19 @@ const App = () => {
   return (
     <Provider store={store}>
       <SafeAreaProvider>
-      <NavigationContainer>
-        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-        <Stack.Navigator initialRouteName="Landing" screenOptions={{headerShown: false}}>
-          <Stack.Screen name="Landing" component={Landing} />
-          <Stack.Screen name="Login" component={LoginPage} />
-          <Stack.Screen name="SignUp" component={SignUp} />
-          <Stack.Screen name="AddProduct" component={PostProductPage} />
-          <Stack.Screen name="Profile" component={ProfilePage} />
-          <Stack.Screen name="Search" component={FindProducts} />
-          <Stack.Screen name="Cart" component={CartPage} />
-          <Stack.Screen name="ProductDetail" component={ProductDetailPage} />
-        </Stack.Navigator>
-      </NavigationContainer>
+        <NavigationContainer>
+          <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+          <Stack.Navigator initialRouteName="Landing" screenOptions={{headerShown: false}}>
+            <Stack.Screen name="Landing" component={Landing} />
+            <Stack.Screen name="Login" component={LoginPage} />
+            <Stack.Screen name="SignUp" component={SignUp} />
+            <Stack.Screen name="AddProduct" component={PostProductPage} />
+            <Stack.Screen name="Profile" component={ProfilePage} />
+            <Stack.Screen name="Search" component={FindProducts} />
+            <Stack.Screen name="Cart" component={CartPage} />
+            <Stack.Screen name="ProductDetail" component={ProductDetailPage} />
+          </Stack.Navigator>
+        </NavigationContainer>
       </SafeAreaProvider>
     </Provider>
     // <SafeAreaView style={backgroundStyle}>

@@ -1,12 +1,15 @@
 import * as React from 'react';
-import styled from 'styled-components'
 import {Pressable} from 'react-native';
+import BouncyCheckBox from "react-native-bouncy-checkbox";
+
+import styled from 'styled-components'
 import {P} from 'components/Texts';
 import {hexToRGB} from 'util/helperFunctions'
 import color from 'util/colors'
+import {gap} from 'util/sizes';
 
 const buttonBase = styled(Pressable)`
-  padding: 12px;
+  padding: ${(props: {padding?: number}) => props.padding ? `${props.padding}px` : `${gap.M}px`};
   border-radius: 6px;
   align-items: center;
 `;
@@ -44,12 +47,25 @@ const WireButton = (props: any) => (
   </WireButtonContainer>
 )
 
-
 // export const Button = (props: any) => (
 //   <ButtonContainer onPress={props.onPress} android_ripple={{color: 'white', foreground: true, }}>
 //     <P>{props.label}</P>
 //   </ButtonContainer>
 // )
+
+export const CheckBox = (props: any) => (
+  <BouncyCheckBox
+    size={20}
+    iconStyle={{borderRadius: gap.XS}}
+    bounceEffect={1}
+    bounceFriction={100}
+    disableText
+    fillColor={props.color || color.primary}
+    isChecked={props.value}
+    onPress={props.onPress}
+    style={props.style}
+  />
+)
 
 const Button = {
   Primary: PrimaryButton,

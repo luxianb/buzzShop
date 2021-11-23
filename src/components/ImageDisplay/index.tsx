@@ -7,7 +7,7 @@ import { hexToRGB } from 'util/helperFunctions';
 import color from 'util/colors';
 import {gap} from 'util/sizes';
 
-const CardImgContainer = styled(View)`
+const ImageContainer = styled(View)`
   background-color: ${hexToRGB(color.blueGrey[900], 0.1)};
   border-radius: ${gap.M}px;
   overflow: hidden;
@@ -25,7 +25,7 @@ export const ProdCardImage = (props: any) => {
   const imgHeight = imgWidth / 3 * 4;
 
   return (
-  <CardImgContainer style={[{width: imgWidth, height: imgHeight}, props.style]}>
+  <ImageContainer style={[{width: imgWidth, height: imgHeight}, props.style]}>
     {Boolean(props.source) ? (
       <Image source={{uri: props.source}} style={s.imageContainer} resizeMode="cover"/>
     ) : (
@@ -33,14 +33,9 @@ export const ProdCardImage = (props: any) => {
         <FontAwesomeIcon icon={faBox} size={40} style={{color: hexToRGB(color.blueGrey[900], .3)}}/>
       </View>
     )}
-  </CardImgContainer>
+  </ImageContainer>
 )}
 
-const ProductImageContainer = styled(View)`
-  background-color: ${hexToRGB(color.blueGrey[900], 0.1)};
-  border-radius: ${gap.M}px;
-  overflow: hidden;
-`;
 
 export const ProductImage = (props: any) => {
   const windowWidth = useWindowDimensions().width;
@@ -48,7 +43,7 @@ export const ProductImage = (props: any) => {
   const imgHeight = imgWidth / 3 * 4;
 
   return (
-  <ProductImageContainer style={[{width: imgWidth, height: imgHeight}, props.style]}>
+  <ImageContainer style={[{width: imgWidth, height: imgHeight}, props.style]}>
     {Boolean(props.source) ? (
       <Image source={{uri: props.source}} style={s.imageContainer} resizeMode="cover"/>
     ) : (
@@ -56,8 +51,24 @@ export const ProductImage = (props: any) => {
         <FontAwesomeIcon icon={faBox} size={40} style={{color: hexToRGB(color.blueGrey[900], .3)}}/>
       </View>
     )}
-  </ProductImageContainer>
+  </ImageContainer>
 )}
+
+export const SquaredImage = (props:any) => {
+  const size = props.size || 100;
+
+  return(
+    <ImageContainer style={{height: size, width: size}}>
+      {Boolean(props.source) ? (
+        <Image source={{uri: props.source}} style={s.imageContainer} resizeMode="cover"/>
+      ) : (
+        <View style={s.imageContainer}>
+          <FontAwesomeIcon icon={faBox} size={size / 4} style={{color: hexToRGB(color.blueGrey[900], .3)}}/>
+        </View>
+    )}
+    </ImageContainer>
+  )
+}
 
 const s = StyleSheet.create({
   imageContainer: {

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { FlatList, View } from 'react-native';
 
-import {Button, H1, P, Col, Row, Page } from 'components/index';
+import {H1, Col, Page } from 'components/index';
 import NavBar from 'components/NavBar';
 import { ProductCard } from 'components/Cards';
 
@@ -11,11 +11,9 @@ import {gap, BASE_URL} from 'util/index';
 import { useSelector } from 'util/redux/hooks';
 
 export default function Landing(props: any) {
-  const {navigation} = props;
-
+  const {navigation, route} = props;
   const {access: accessToken, userInfo} = useSelector(state => state.token);
   const [products, setProducts] = useState({status: 'initial', data:[]})
-  // const dispatch = useDispatch();
 
   useEffect(() => {
     async function fetchProducts() {
@@ -28,7 +26,7 @@ export default function Landing(props: any) {
     }
 
     fetchProducts();
-  },[])
+  },[navigation])
 
 
   return(
@@ -52,7 +50,7 @@ export default function Landing(props: any) {
         
       </Col>
     </Page>
-    <NavBar />
+    <NavBar navigation={navigation}/>
     </>
   )
 };

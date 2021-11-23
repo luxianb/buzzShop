@@ -71,7 +71,7 @@ export default function ProfilePage(props: any) {
           </>
         )}
       </Page>
-      <NavBar />
+      <NavBar navigation={navigation}/>
     </>
   );
 }

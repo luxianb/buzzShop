@@ -1,20 +1,18 @@
 import React from 'react';
-import {View, Text, Pressable, Platform} from 'react-native';
-import styled from 'styled-components';
-import {Col, Row} from 'components/Views';
-import { useRoute, useNavigation } from '@react-navigation/native';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import {P} from 'components/Texts';
-import { faCartPlus, faHome, faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
-import { fontSize, gap } from 'util/sizes';
-import color from 'util/colors';
-import { hexToRGB } from 'util/helperFunctions';
+import {Pressable, Platform} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import styled from 'styled-components';
+import { useRoute } from '@react-navigation/native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faCartPlus, faHome, faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
+
+import {Col, Row, P} from 'components/index';
+import { fontSize, gap, color, hexToRGB } from 'util/index';
 
 const Container = styled(Row)`
   /* height: ${Platform.OS === 'ios' ? "80px" : "60px"}; */
   align-items: center;
-  box-shadow: 0 0 0 ${hexToRGB(color.black, 0.05)};
+  box-shadow: 0 0 4px ${hexToRGB(color.black, 0.15)};
   background-color: ${color.white};
   z-index: 2;
   /* padding-bottom: ${Platform.OS === 'ios' ? '20px' : "initial"}; */
@@ -40,10 +38,9 @@ const NavItem = (props: any) => (
   </ItemContainer>
 )
 
-export default function NavBar() {
+export default function NavBar(props: any) {
   const route = useRoute();
-  const navigation = useNavigation();
-  // const inset = useSafeAreaInsets();
+  const {navigation} = props;
   const safeArea = Math.max(useSafeAreaInsets().bottom, 16)
 
   return(
@@ -51,25 +48,25 @@ export default function NavBar() {
       <NavItem
         icon={faHome}
         label={"Home"}
-        onPress={() => navigation.navigate({name: "Landing"})}
+        onPress={() => navigation.navigate("Landing")}
         isActive={route.name === "Landing"}
       />
       <NavItem
         icon={faSearch}
         label={"Search"}
-        onPress={() => navigation.navigate({name: "Search"})}
+        onPress={() => navigation.navigate("Search")}
         isActive={route.name === "Search"}
       />
       <NavItem
         icon={faCartPlus}
         label={"Cart"}
-        onPress={() => navigation.navigate({name: "Cart"})}
+        onPress={() => navigation.navigate("Cart")}
         isActive={route.name === "Cart"}
       />
       <NavItem
         icon={faUser}
         label={"Profile"}
-        onPress={() => navigation.navigate({name: "Profile"})}
+        onPress={() => navigation.navigate("Profile")}
         isActive={route.name === "Profile"}
       />
     </Container>
