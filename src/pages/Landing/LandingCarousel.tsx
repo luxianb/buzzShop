@@ -1,11 +1,15 @@
 import React, {useState, useEffect} from 'react';
-import {View, useWindowDimensions} from 'react-native';
+import {View, useWindowDimensions, Image} from 'react-native';
 import styled from 'styled-components';
 import Carousel from 'react-native-snap-carousel';
 import {useSpring, animated} from '@react-spring/native';
 
-import {P, Row} from 'components/index';
+import {Row} from 'components/index';
 import {gap, color, hexToRGB} from 'util/index';
+const banner_img1 = require('../../assets/banner_1.png');
+const banner_img2 = require('../../assets/banner_2.png');
+const banner_img3 = require('../../assets/banner_3.png');
+
 
 const IndicatorItem = styled(animated.View)`
   /* width: ${(props: any) => props.isActive ? '30px' : '10px'}; */
@@ -30,25 +34,33 @@ const Indicator = (props: any) => {
   return <IndicatorItem {...props} style={[styles]} />
 }
 
+const CarouselItem = (props: any) => {
+  const window = useWindowDimensions();
+  const padding = gap.M;
+  
+  return (
+    <View style={{height: 200, borderRadius: gap.M, flex: 1, overflow: 'hidden'}}>
+      <Image source={props.image_source} style={{height: 200, width: window.width - padding * 2}} />
+    </View>
+)}
+
+
 export default function LandingCarousel(props: any) {
   const [activeIndex, setActiveIndex] = useState(0)
-  const data = ['', '', '']
+  const data = [
+    {image_source: banner_img1},
+    {image_source: banner_img2},
+    {image_source: banner_img3},
+    ]
   const window = useWindowDimensions();
   const padding = gap.M;
 
-  const CarouselItem = () => (
-    <View style={{height: 200, borderRadius: gap.M, backgroundColor: 'red'}}>
-      <P>Content</P>
-    </View>
-  )
-
   return(
     <>
-
       <Carousel
         layout="default"
         data={data}
-        renderItem={() => <CarouselItem />}
+        renderItem={({item}) => <CarouselItem {...item}/>}
         onSnapToItem={(index) => setActiveIndex(index)}
         sliderWidth={window.width}
         itemWidth={window.width - padding * 2}
