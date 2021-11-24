@@ -11,7 +11,7 @@ import { gap, BASE_URL } from "util/index";
 import { useSelector } from "util/redux/hooks";
 import LandingCarousel from "./LandingCarousel";
 
-export default function Landing(props: any) {
+const Landing = (props: any) => {
   const { navigation, route } = props;
   const { access: accessToken, userInfo } = useSelector((state) => state.token);
   const [products, setProducts] = useState({ status: "initial", data: [] });
@@ -24,8 +24,10 @@ export default function Landing(props: any) {
         setProducts({ status: "fetched", data: res.data });
       } catch (err) { console.log(err); }
     }
-
-    fetchProducts();
+    
+    navigation.addListener('focus', () => {
+      fetchProducts();
+    })
   }, [navigation]);
 
   return (
@@ -65,3 +67,5 @@ export default function Landing(props: any) {
     </>
   );
 }
+
+export default Landing
