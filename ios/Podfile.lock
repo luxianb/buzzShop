@@ -348,6 +348,19 @@ PODS:
     - React-RCTImage
   - RNSVG (12.1.1):
     - React
+  - Stripe (21.9.0):
+    - Stripe/Stripe3DS2 (= 21.9.0)
+    - StripeCore (= 21.9.0)
+    - StripeUICore (= 21.9.0)
+  - stripe-react-native (0.2.3):
+    - React-Core
+    - Stripe (~> 21.9.0)
+  - Stripe/Stripe3DS2 (21.9.0):
+    - StripeCore (= 21.9.0)
+    - StripeUICore (= 21.9.0)
+  - StripeCore (21.9.0)
+  - StripeUICore (21.9.0):
+    - StripeCore (= 21.9.0)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -410,6 +423,7 @@ DEPENDENCIES:
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
+  - "stripe-react-native (from `../node_modules/@stripe/stripe-react-native`)"
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -427,6 +441,9 @@ SPEC REPOS:
     - fmt
     - libevent
     - OpenSSL-Universal
+    - Stripe
+    - StripeCore
+    - StripeUICore
     - YogaKit
 
 EXTERNAL SOURCES:
@@ -498,6 +515,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-screens"
   RNSVG:
     :path: "../node_modules/react-native-svg"
+  stripe-react-native:
+    :path: "../node_modules/@stripe/stripe-react-native"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -549,6 +568,10 @@ SPEC CHECKSUMS:
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNScreens: 4d79118be80f79fa1f4aa131909a1d6e86280af3
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
+  Stripe: 41c3d261501e1dc84755b1bdabdaae50ebf92b53
+  stripe-react-native: 980f3d19f52a7dc4b373c6c20d30ebd760bc39e5
+  StripeCore: 2ea9531e863ef20f191a0d61f00dedb7f061baef
+  StripeUICore: a0f9e40520823d34c63baec0782fc4a0c7fb7484
   Yoga: 9a08effa851c1d8cc1647691895540bc168ea65f
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
