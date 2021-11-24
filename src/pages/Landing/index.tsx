@@ -10,6 +10,7 @@ import { ProductCard } from "components/Cards";
 import { gap, BASE_URL } from "util/index";
 import { useSelector } from "util/redux/hooks";
 import LandingCarousel from "./LandingCarousel";
+import { ProductCardList } from "components/Cards/CardLists";
 
 const Landing = (props: any) => {
   const { navigation, route } = props;
@@ -45,19 +46,9 @@ const Landing = (props: any) => {
           </Col>
 
           <Col style={{ paddingHorizontal: gap.M }}>
-            <FlatList
+            <ProductCardList
               data={products.data}
-              numColumns={2}
-              style={{ marginRight: -gap.M }}
-              ItemSeparatorComponent={() => <View style={{ height: gap.M }} />}
-              renderItem={({ item }) => (
-                <ProductCard
-                  product={item}
-                  onPress={() =>
-                    navigation.navigate("ProductDetail", { product: item })
-                  }
-                />
-              )}
+              navigation={navigation}
             />
           </Col>
 

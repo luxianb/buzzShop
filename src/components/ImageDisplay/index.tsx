@@ -14,18 +14,19 @@ const ImageContainer = styled(View)`
 `;
 
 export const ProdCardImage = (props: any) => {
-  const windowWidth = useWindowDimensions().width;
-  const displayProperties = {
-    cols: props.cols || 2,
-    padding: props.pagePadding || gap.M,
-    imgGap: props.imageGap || gap.M
-  }
-  const {cols, padding, imgGap} = displayProperties;
-  const imgWidth = (windowWidth / cols) - padding - (imgGap / cols)
-  const imgHeight = imgWidth / 3 * 4;
+  const {cardWidth} = props;
+  // const windowWidth = useWindowDimensions().width;
+  // const displayProperties = {
+  //   cols: props.cols || 2,
+  //   padding: props.pagePadding || gap.M,
+  //   imgGap: props.imageGap || gap.M
+  // }
+  // const {cols, padding, imgGap} = displayProperties;
+  // const imgWidth = (windowWidth / cols) - padding - (imgGap / cols)
+  // const imgHeight = imgWidth / 3 * 4;
 
   return (
-  <ImageContainer style={[{width: imgWidth, height: imgHeight}, props.style]}>
+  <ImageContainer style={[{width: cardWidth, height: cardWidth / 3 * 4}, props.style]}>
     {Boolean(props.source) ? (
       <Image source={{uri: props.source}} style={s.imageContainer} resizeMode="cover"/>
     ) : (
