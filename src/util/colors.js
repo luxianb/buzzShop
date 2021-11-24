@@ -325,6 +325,6 @@ const definedColors = {
   error: red['500']
 }
 
-const color = {red, pink, purple, deepPurple, indigo, blue, lightBlue, cyan, teal, green, lightGreen, lime, yellow, orange, deepOrange, brown, grey, blueGrey, white, black, ...definedColors}
+const color = {red, pink, purple, deepPurple, indigo, blue, lightBlue, cyan, teal, green, lightGreen, lime, yellow, orange, deepOrange, amber, brown, grey, blueGrey, white, black, ...definedColors}
 
 export default color;
