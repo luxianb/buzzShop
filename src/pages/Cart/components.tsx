@@ -60,6 +60,10 @@ export const CartItem = (props: any) => {
       default: return;
     }
 
+    if (updatedForm.amount === 0) {
+      return props.toggleDeleteModal(id)
+    }
+
     try {
       const res = await axios.put(`${BASE_URL}/cart/e/${id}/`, updatedForm, {
         headers: { Authorization: `Bearer ${accessToken}` }

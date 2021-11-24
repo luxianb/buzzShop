@@ -1,18 +1,25 @@
 import React, {useEffect, useState} from 'react';
-import { FlatList, View, StyleSheet } from 'react-native';
+import { FlatList, View, StyleSheet, Pressable } from 'react-native';
 import axios from 'axios';
 
-import { Page, P, H2, H4, Row, Button } from "components/index";
+import { Page, P, H2, H4, Row, Button, Modal } from "components/index";
 import NavBar from "components/NavBar";
 
 import {gap, BASE_URL, color} from 'util/index';
 import { CartItem } from './components';
 import { useSelector } from 'util/redux/hooks';
+import { ScrollView } from 'react-native-gesture-handler';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 export default function CartPage(props: any) {
   const {navigation, route} = props;
-  const [cartItems, setCartItems] = useState({status: 'initial', data:[{product: {id: 0}, selected: false}]})
+
+  const [cartItems, setCartItems] = useState({status: 'initial', data:[{id: 0, product: {id: 0}, selected: false}]})
+  const [displayModal, setDisplayModal] = useState('');
+  const [itemToRemove, setItemToRemove] = useState(null)
   const {access: accessToken, userInfo: { id: user_id }} = useSelector(state => state.token)
+
   const selectedItems = cartItems.data.filter((data) => data.selected)
 
   useEffect(() => {
@@ -45,12 +52,50 @@ export default function CartPage(props: any) {
     setCartItems({...cartItems, data: updatedCart})
   }
 
+  async function removeItemFromCart(item_id: number) {
+    try {
+      const res = await axios.delete(`${BASE_URL}/cart/e/${item_id}/`, {
+        headers: { Authorization: `Bearer ${accessToken}` }
+      })
+      console.log(res);
+
+      setCartItems({...cartItems, data:cartItems.data.filter((item) => item.id !== item_id)})
+
+    } catch (err) {console.log(err)}
+  }
+
+  function handleRemoveCartItem() {
+    if (Boolean(itemToRemove)) {
+      removeItemFromCart(itemToRemove)
+    } else {
+      for (const item of selectedItems) {
+        removeItemFromCart(item.id)
+      }
+    }
+    setDisplayModal('')
+  }
+
+  function dismissModal() {
+    setDisplayModal('');
+    setItemToRemove(null);
+  }
+
 
   console.log(cartItems)
   return (
     <>
       <Page style={{ padding: gap.M }}>
-        <H2 style={{ marginBottom: gap.L }}>Shopping Cart</H2>
+        <ScrollView>
+        <Row style={{justifyContent: 'space-between', alignItems: 'center', marginBottom: gap.L }}>
+          <H2>Shopping Cart</H2>
+          <Pressable disabled={selectedItems.length === 0} onPress={() => setDisplayModal('confirmItemDelete')}>
+            <FontAwesomeIcon 
+              icon={faTrashAlt} 
+              style={{color: selectedItems .length === 0 ? color.blueGrey[200] : color.primary}}
+              size={18}
+            />
+          </Pressable>
+        </Row>
 
         {cartItems.status !== "initial" && cartItems.data.length > 0 && (
           <FlatList
@@ -62,12 +107,16 @@ export default function CartPage(props: any) {
                   {...item}
                   toggleSelected={() => handleSelectToggle(index)}
                   onAmountUpdate={(updatedData: any) => handleAmountUpdate(updatedData, index)}
+                  toggleDeleteModal={(item_id: number) => {
+                    setItemToRemove(item_id);
+                    setDisplayModal('confirmItemDelete')
+                  }}
                 />
               );
             }}
           />
         )}
-
+      </ScrollView>
       </Page>
       {selectedItems.length > 0 && (
         <Row style={s.checkOutContainer}>
@@ -76,6 +125,21 @@ export default function CartPage(props: any) {
         </Row>
       )}
       <NavBar navigation={navigation}/>
+      {Boolean(displayModal) && (
+        <>
+        {displayModal === 'confirmItemDelete' && (
+          <Modal closeAction={() => dismissModal()}>
+            <H2 style={{ marginBottom: gap.M }}>Remove item from cart?</H2>
+            <P>Remove this {selectedItems.length || 1} item from the cart</P>
+
+            <Row style={{ marginTop: gap.L }}>
+              <Button.Ghost label="No" style={{ marginRight: gap.M, flex: 1}} onPress={() => dismissModal()}/>
+              <Button.Primary label="Yes" style={{ flex: 1}} onPress={() => handleRemoveCartItem()}/>
+            </Row>
+          </Modal>
+        )}
+        </>
+      )}
     </>
   );
 }
