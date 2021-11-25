@@ -1,10 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import {FlatList, View} from 'react-native';
+import {View} from 'react-native';
 import NavBar from "components/NavBar";
 import axios from 'axios';
 
 import { P, H2, Page } from "components/index";
-import { ProductCard } from "components/Cards";
 import {ProductCardList} from 'components/Cards/CardLists'
 import SearchBar from 'components/Inputs/SearchBar';
 import { gap, BASE_URL, color } from "util/index";
