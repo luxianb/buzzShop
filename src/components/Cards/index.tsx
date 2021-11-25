@@ -14,8 +14,6 @@ const CardContainer = styled(Col)`
 
 const ProductName = styled(P)`
   margin-top: ${gap.S}px;
-  word-wrap: normal;
-  /* flex: 1; */
 `;
 
 const PriceLabel = styled(H4)`

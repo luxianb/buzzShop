@@ -40,6 +40,7 @@ export const ProductCardList = (props: any) => {
             colSeparator={imgGap}
           />
         )}
+        {...props}
       />
     // </View>
   );

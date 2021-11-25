@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import { P, H2, Page } from "components/index";
 import { ProductCard } from "components/Cards";
+import {ProductCardList} from 'components/Cards/CardLists'
 import SearchBar from 'components/Inputs/SearchBar';
 import { gap, BASE_URL, color } from "util/index";
 
@@ -51,26 +52,15 @@ export default function FindProducts(props: any) {
             handleSearch(query)
           }}
         />
-        
-        <FlatList
+        <ProductCardList
           data={searchQuery.length > 0 ? filteredList : products.data}
-          numColumns={2}
-          style={{ marginRight: -gap.M }}
-          // contentContainerStyle={{flex: 1}}
-          ItemSeparatorComponent={() => <View style={{ height: gap.M }} />}
-          renderItem={({ item, index }) => (
-              <ProductCard
-                product={item}
-                onPress={() =>
-                  navigation.navigate("ProductDetail", { product: item })
-                }
-              />
-            )}
-            ListEmptyComponent={() => (
-              <View style={{height: 300, justifyContent: 'center', alignItems: 'center'}}>
-                <P style={{color: color.blueGrey[400]}}>No such product found...</P>
-              </View>
-            )}
+          navigation={navigation}
+          // contentContainerStyle={{paddingHorizontal: gap.M}}
+          ListEmptyComponent={() => (
+            <View style={{height: 300, justifyContent: 'center', alignItems: 'center'}}>
+              <P style={{color: color.blueGrey[400]}}>No such product found...</P>
+            </View>
+          )}
         />
 
       </Page>
