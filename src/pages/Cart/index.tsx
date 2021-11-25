@@ -31,8 +31,10 @@ export default function CartPage(props: any) {
         setCartItems({status: 'loaded', data: formatedData})
       } catch (err) {console.log(err)}
     }
-    fetchCartItems();
-  }, [route])
+    navigation.addListener('focus', () => {
+      fetchCartItems();
+    })
+  }, [navigation])
 
   // ? Functions
   function handleAmountUpdate(updatedData: any, index: number) {

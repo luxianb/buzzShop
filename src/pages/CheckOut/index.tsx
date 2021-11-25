@@ -1,30 +1,40 @@
-import React from "react";
+import React, {useState} from "react";
 import { View, ScrollView, StyleSheet } from "react-native";
 import { addDays, format } from "date-fns";
 
-import { Page, H5, H4, Row, P, Col, Hr, Button } from "components/index";
+import { Page, H5, H4, Row, P, Col, Hr, Button, Modal, H2 } from "components/index";
 import { BackableHeader } from "components/Buttons/BackButtons";
 import CheckOutItem from "./CheckOutItem";
 
-import { color, gap, hexToRGB } from "util/index";
+import { color, gap, hexToRGB, BASE_URL } from "util/index";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import axios from "axios";
+import { useSelector } from "util/redux/hooks";
 
 export default function CheckOutPage(props: any) {
-  const {
-    navigation,
-    route: { params: selectedItems },
-  } = props;
+  const {navigation, route: { params: selectedItems }} = props;
+  const {access: accessToken} = useSelector((state) => state.token)
   const today = new Date();
   const safeAreaBottom = Math.max(useSafeAreaInsets().bottom, 16);
+  const [displayModal, setDisplayModal] = useState('')
 
-  const itemsSubtotal = selectedItems.reduce(
-    (total: number, item: any) => total + item.amount * item.product.price,
-    0
-  );
+  const itemsSubtotal = selectedItems.reduce((total: number, item: any) => total + item.amount * item.product.price, 0 );
   const deliveryFee = 1.5;
   const orderTotal = itemsSubtotal + deliveryFee;
 
-  console.log(props);
+  async function handlePurchase() {
+    for (const item of selectedItems) {
+      const dataToSend = {...item, product: item.product.id, status: 'Ordered'}
+      console.log(dataToSend)
+      try {
+        const res = await axios.put(`${BASE_URL}/cart/e/${item.id}/`, dataToSend, {
+          headers: { Authorization: `Bearer ${accessToken}` }
+        })
+      } catch (err) { console.log(err) }
+    }
+    setDisplayModal('purchaseSuccess')
+  }
+
   return (
     <>
       <Page style={{ padding: gap.M }}>
@@ -39,13 +49,7 @@ export default function CheckOutPage(props: any) {
               <>
                 <CheckOutItem {...item} />
                 {index !== arr.length - 1 && (
-                  <View
-                    style={{
-                      height: 1,
-                      backgroundColor: color.blueGrey[100],
-                      marginVertical: gap.M,
-                    }}
-                  />
+                  <View style={s.checkOutItemSeperator} />
                 )}
               </>
             ))}
@@ -107,13 +111,37 @@ export default function CheckOutPage(props: any) {
           Total:{" "}
           <H4 style={{ color: color.primary }}>${orderTotal.toFixed(2)}</H4>
         </H4>
-        <Button.Primary label="Place Order" padding={gap.S} />
+        <Button.Primary label="Place Order" padding={gap.S} onPress={() => handlePurchase()}/>
       </Row>
+
+      {Boolean(displayModal) && (
+        <>
+          {displayModal === 'purchaseSuccess' && (
+            <Modal>
+            <H2 style={{ marginBottom: gap.M }}>Purchase successful</H2>
+            <P>Order for you item has been successfully submited</P>
+
+            <Row style={{ marginTop: gap.L }}>
+              <Button.Primary
+                label="Ok"
+                style={{ flex: 1 }}
+                onPress={() => navigation.navigate('Cart')}
+              />
+            </Row>
+          </Modal>
+          )}
+        </>
+      )}
     </>
   );
 }
 
 const s = StyleSheet.create({
+  checkOutItemSeperator: {
+    height: 1, 
+    backgroundColor: color.blueGrey[100], 
+    marginVertical: gap.M
+  },
   deliveryInfoContainer: {
     padding: gap.M,
     borderRadius: gap.M,
@@ -127,4 +155,5 @@ const s = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
+
 });
