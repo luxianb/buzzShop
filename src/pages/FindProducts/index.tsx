@@ -55,9 +55,9 @@ export default function FindProducts(props: any) {
         <ProductCardList
           data={searchQuery.length > 0 ? filteredList : products.data}
           navigation={navigation}
-          // contentContainerStyle={{paddingHorizontal: gap.M}}
+          contentContainerStyle={{flexGrow: 1}}
           ListEmptyComponent={() => (
-            <View style={{height: 300, justifyContent: 'center', alignItems: 'center'}}>
+            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
               <P style={{color: color.blueGrey[400]}}>No such product found...</P>
             </View>
           )}

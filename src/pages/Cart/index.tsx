@@ -34,6 +34,7 @@ export default function CartPage(props: any) {
     fetchCartItems();
   }, [route])
 
+  // ? Functions
   function handleAmountUpdate(updatedData: any, index: number) {
     const updatedCart = [...cartItems.data];
     updatedCart.splice(index, 1, updatedData);
@@ -61,13 +62,29 @@ export default function CartPage(props: any) {
     } catch (err) {console.log(err)}
   }
 
+  async function removeMultipleItemFromCart(items: Array<any>) {
+    const listToPush = [...cartItems.data];
+
+    for (const selectedItem of items) {
+      try {
+        const res = await axios.delete(`${BASE_URL}/cart/e/${selectedItem.id}/`, {
+          headers: {Authorization: `Bearer ${accessToken}`}
+        })
+        console.log(res);
+        
+        const targetIndex = listToPush.indexOf((listItem) => listItem.id === selectedItem.id)
+        listToPush.splice(targetIndex, 1);
+      } catch (err) {console.log(err)}
+    }
+    setCartItems({...cartItems, data:listToPush})
+
+  }
+
   function handleRemoveCartItem() {
     if (Boolean(itemToRemove)) {
       removeItemFromCart(itemToRemove)
     } else {
-      for (const item of selectedItems) {
-        removeItemFromCart(item.id)
-      }
+      removeMultipleItemFromCart(selectedItems)
     }
     dismissModal()
   }
@@ -77,10 +94,10 @@ export default function CartPage(props: any) {
     setItemToRemove(null);
   }
 
-
+  // ? Render
   return (
     <>
-      <Page style={{ padding: gap.M }}>
+      <Page style={{ padding: gap.M, paddingBottom: 0 }}>
         <FlatList
           ListHeaderComponent={
             <>
@@ -101,6 +118,7 @@ export default function CartPage(props: any) {
           }
           data={cartItems.data}
           ItemSeparatorComponent={() => <View style={{ height: gap.S }} />}
+          contentContainerStyle={{ flexGrow: 1 }}
           renderItem={({ item, index }) => {
             return (
               <CartItem
@@ -116,6 +134,11 @@ export default function CartPage(props: any) {
               />
             );
           }}
+          ListEmptyComponent={() => (
+            <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+              <P style={{color: color.blueGrey[400]}}>Your cart is empty</P>
+            </View>
+          )}
         />
       </Page>
       {selectedItems.length > 0 && (
