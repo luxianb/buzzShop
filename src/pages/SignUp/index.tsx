@@ -58,9 +58,9 @@ export default function SignUp(props: any) {
     if (!state.password) {
       errors.password = "Include a password";
     } 
-    // else if (!validator.isStrongPassword(state.password, {minSymbols: 0, minLowercase: 0})) {
-    //   errors.password = "Include at least 1 uppercase, and 1 number";
-    // }
+    else if (!validator.isStrongPassword(state.password, {minSymbols: 0, minLowercase: 0})) {
+      errors.password = "Include at least 1 uppercase, and 1 number";
+    }
      else if (state.password !== state.rePassword) {
       errors.password = "Passwords do not match";
     }
@@ -82,7 +82,8 @@ export default function SignUp(props: any) {
         setState({signupSuccess: true})
         setTimeout(async () => {
           const loginResponse = await axios.post(`${BASE_URL}/user/login/`, {username, password});
-          const userInfoResponse = await axios.get(`${BASE_URL}/user/${username}/`)
+
+          const userInfoResponse = await axios.get(`${BASE_URL}/decodeJWT/${loginResponse.data.token}/`)
           console.log(loginResponse)
           if (loginResponse.status === 200) {
             await DISPATCH(setLoginInfo({access: loginResponse.data.token, userInfo: userInfoResponse.data}));
