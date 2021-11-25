@@ -17,7 +17,7 @@ const Landing = (props: any) => {
   const [products, setProducts] = useState<{status: string, data: Product[]}>({ status: "initial", data: [] });
   const [displayedProducts, setDisplayedProducts] = useState<Product[] | []>([])
   const [tagFilter, setTagFilter] = useState('');
-  const filterTags = [{value: '', name: 'All Products'}, {value: 'electronic', name: "Electronics"}]
+  const [cloudData, setCloudData] = useState({status: 'initial', tags: [], banners: []});
 
   useEffect(() => {
     async function fetchProducts() {
@@ -27,9 +27,17 @@ const Landing = (props: any) => {
         setProducts({ status: "fetched", data: res.data });
       } catch (err) { console.log(err); }
     }
+    async function fetchCloudData() {
+      try {
+        const res = await axios.get(`${BASE_URL}/enviroment/`);
+        console.log(res);
+        setCloudData({ status: "fetched", ...res.data });
+      } catch (err) { console.log(err); }
+    }
     
     navigation.addListener('focus', () => {
       fetchProducts();
+      fetchCloudData();
     })
   }, [navigation]);
 
@@ -54,14 +62,20 @@ const Landing = (props: any) => {
 
   const Carousel = () => (
     <Col style={{marginBottom: gap.L}}>
-      <LandingCarousel />
+      <LandingCarousel data={cloudData.banners}/>
     </Col>
   )
 
   const FilterList = () => (
     <ScrollView horizontal showsHorizontalScrollIndicator={false}>
       <Row style={{justifyContent: 'flex-start', paddingHorizontal: gap.M, marginBottom: gap.M}}>
-        {filterTags.map((tag: any, index, arr) => (
+          <Chip.Toggable 
+            text={'All Products'}
+            active={'' === tagFilter}
+            onPress={() => setTagFilter('')}
+          />
+          <View style={{width: gap.S}} />
+        {cloudData.tags.map((tag: any, index, arr) => (
           <>
             <Chip.Toggable 
               text={tag.name}
@@ -76,6 +90,7 @@ const Landing = (props: any) => {
   )
 
 
+  console.log(cloudData);
   return (
     <>
       <Page>

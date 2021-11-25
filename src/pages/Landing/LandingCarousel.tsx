@@ -40,7 +40,7 @@ const CarouselItem = (props: any) => {
   
   return (
     <View style={{height: 200, borderRadius: gap.M, flex: 1, overflow: 'hidden'}}>
-      <Image source={props.image_source} style={{height: 200, width: window.width - padding * 2}} />
+      <Image source={{uri: props.image_url} || props.image_source} style={{height: 200, width: window.width - padding * 2}} />
     </View>
 )}
 
@@ -59,7 +59,7 @@ export default function LandingCarousel(props: any) {
     <>
       <Carousel
         layout="default"
-        data={data}
+        data={props.data || data}
         renderItem={({item}) => <CarouselItem {...item}/>}
         onSnapToItem={(index) => setActiveIndex(index)}
         sliderWidth={window.width}
