@@ -32,7 +32,7 @@ const Chip = {
 
 const s = StyleSheet.create({
   chipContainer: {
-    backgroundColor: hexToRGB(color.blueGrey[700], .2),
+    backgroundColor: hexToRGB(color.blueGrey[700], .1),
     paddingVertical: gap.S,
     paddingHorizontal: gap.M,
     borderRadius: 50,
