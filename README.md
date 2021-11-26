@@ -1,5 +1,6 @@
 # BuzzShop
-Mobile ecommerce app built using react-native, served on a django-posgre server on heroku
+Mobile ecommerce app built using react-native, served on a django-posgre server on heroku.
+backend repo: https://github.com/luxianb/buzzShop-db
 
 ## Instructions
 * clone repo
