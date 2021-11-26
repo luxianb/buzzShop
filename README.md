@@ -18,6 +18,14 @@ Mobile ecommerce app built using react-native, served on a django-posgre server 
   npx react-native run-android
  ```
 
+ ## Screen shots:
+ ![](./screen_shots/phone_screen.png)
+ ![](./screen_shots/landing.png)
+ ![](./screen_shots/search_page.png)
+ ![](./screen_shots/product_display.png)
+ ![](./screen_shots/cart.png)
+ ![](./screen_shots/check_out.png)
+
 ## Tech Stack:
 * React-native
 * Typescript
