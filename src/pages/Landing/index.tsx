@@ -109,7 +109,7 @@ const Landing = (props: any) => {
             <FilterList />
           </>
         }
-        contentContainerStyle={{paddingHorizontal: gap.M}}
+        contentContainerStyle={{paddingHorizontal: gap.M, flexGrow: 1}}
         data={tagFilter ? displayedProducts : products.data}
         navigation={navigation}
       />
