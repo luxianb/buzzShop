@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { FlatList, View, StyleSheet, Pressable } from 'react-native';
+import { FlatList, View, StyleSheet, Pressable, ActivityIndicator } from 'react-native';
 import axios from 'axios';
 
 import { Page, P, H2, H4, Row, Button, Modal } from "components/index";
@@ -29,7 +29,10 @@ export default function CartPage(props: any) {
         // console.log(res)
         const formatedData = res.data.map((data: any) => ({...data, selected: false}))
         setCartItems({status: 'loaded', data: formatedData})
-      } catch (err) {console.log(err)}
+      } catch (err) {
+        console.log(err)
+        setCartItems({...cartItems, status: 'loaded'})
+      }
     }
     navigation.addListener('focus', () => {
       fetchCartItems();
@@ -97,6 +100,13 @@ export default function CartPage(props: any) {
   }
 
   // ? Render
+  if (cartItems.status === 'initial') {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size={'large'} color={color.primary} />
+      </View>
+    )
+  }
   return (
     <>
       <Page style={{ padding: gap.M, paddingBottom: 0 }}>

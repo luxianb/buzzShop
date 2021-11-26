@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, View } from "react-native";
+import { ActivityIndicator, ScrollView, View } from "react-native";
 
 import axios from "axios";
 
 import { H1, Col, Page, Chip, Row } from "components/index";
 import NavBar from "components/NavBar";
 
-import { gap, BASE_URL } from "util/index";
+import { gap, BASE_URL, color } from "util/index";
 import { useSelector } from "util/redux/hooks";
 import LandingCarousel from "./LandingCarousel";
 import { ProductCardList } from "components/Cards/CardLists";
@@ -90,10 +90,16 @@ const Landing = (props: any) => {
   )
 
 
-  console.log(cloudData);
+  if (cloudData.status === 'initial' || products.status === 'initial' ) {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size={'large'} color={color.primary} />
+      </View>
+    )
+  }
   return (
     <>
-      <Page>
+    <Page>
       <ProductCardList
         ListHeaderComponentStyle={{marginHorizontal: -gap.M}}
         ListHeaderComponent={
